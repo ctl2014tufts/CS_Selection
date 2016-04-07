@@ -126,12 +126,12 @@ selectionParams.SaTcond    = 0.5;   % (optional) target Sa(Tcond) to use when
 % other parameters to scale motions and evaluate selections 
 selectionParams.isScaled   = 1;       
 selectionParams.maxScale   = 10;       
-selectionParams.tol        = 50; 
+selectionParams.tol        = 10; 
 selectionParams.optType    = 1; 
 selectionParams.penalty    = 0;
 selectionParams.weights    = [1.0 2.0 0.3];
 selectionParams.nLoop      = 2;
-selectionParams.useVar     = 1;   % =1 to use conditional spectrum variance, =0 to use a target variance of 0
+selectionParams.useVar     = 1;   % =1 to use computed variance, =0 to use a target variance of 0
 
 % User inputs to specify the target earthquake rupture scenario
 rup.M_bar       = 6.5;      % earthquake magnitude
@@ -157,6 +157,8 @@ allowedRecs.D    = [-Inf Inf];     % upper and lower bound of allowable distance
 
 % Miscellaneous other inputs
 showPlots   = 1;        % =1 to plot results, =0 to suppress plots
+copyFiles   = 0;        % =1 to copy selected motions to a local directory, 
+                        % otherwise =0 to suppress plots
 seedValue   = 1;        % =0 for random seed in when simulating 
                         % response spectra for initial matching, 
                         % otherwise the specifed seedValue is used.
@@ -215,5 +217,7 @@ rec = allowedIndex(IMs.recID); % selected motions, as indixed in the original da
 
 write_output(rec, IMs, outputDir, outputFile, getTimeSeries, Filename, dirLocation)
 
-%% Copy time series to the working directory, if possible
-download_time_series(outputDir, rec, Filename, dirLocation)
+%% Copy time series to the working directory, if desired and possible
+if copyFiles
+    download_time_series(outputDir, rec, Filename, dirLocation)
+end
