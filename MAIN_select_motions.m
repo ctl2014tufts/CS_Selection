@@ -103,15 +103,15 @@
 
 %% User inputs begin here
 % Ground motion database and type of selection 
-% selectionParams.databaseFile    = 'NGA_W2_meta_data'; 
-selectionParams.databaseFile    = 'BBP_GP_meta_data'; 
+selectionParams.databaseFile    = 'NGA_W2_meta_data'; 
+% selectionParams.databaseFile    = 'BBP_GP_meta_data'; 
 selectionParams.cond            = 1;
 selectionParams.arb             = 2; 
 selectionParams.RotD            = 50; 
 
 % Number of ground motions and spectral periods of interest
-selectionParams.nGM        = 30;  % number of ground motions to be selected 
-selectionParams.Tcond      = 1.5; % Period at which spectra should be scaled and matched 
+selectionParams.nGM        = 20;  % number of ground motions to be selected 
+selectionParams.Tcond      = 0.5; % Period at which spectra should be scaled and matched 
 selectionParams.Tmin       = 0.1; % smallest spectral period of interest
 selectionParams.Tmax       = 10;  % largest spectral period of interest
 
@@ -126,8 +126,8 @@ selectionParams.SaTcond    = 0.5;   % (optional) target Sa(Tcond) to use when
 % other parameters to scale motions and evaluate selections 
 selectionParams.isScaled   = 1;       
 selectionParams.maxScale   = 10;       
-selectionParams.tol        = 50; 
-selectionParams.optType    = 1; 
+selectionParams.tol        = 0; 
+selectionParams.optType    = 0; 
 selectionParams.penalty    = 0;
 selectionParams.weights    = [1.0 2.0 0.3];
 selectionParams.nLoop      = 2;
@@ -152,12 +152,12 @@ rup.Fault_Type  = 1;        % =0 for unspecified fault
                         
 % Ground motion properties to require when selecting from the database. 
 allowedRecs.Vs30 = [-Inf Inf];     % upper and lower bound of allowable Vs30 values 
-allowedRecs.Mag  = [ 6.3 6.7];     % upper and lower bound of allowable magnitude values
+allowedRecs.Mag  = [-Inf Inf];     % upper and lower bound of allowable magnitude values
 allowedRecs.D    = [-Inf Inf];     % upper and lower bound of allowable distance values
 
 % Miscellaneous other inputs
 showPlots   = 1;        % =1 to plot results, =0 to suppress plots
-seedValue   = 1;        % =0 for random seed in when simulating 
+seedValue   = 3;        % =0 for random seed in when simulating 
                         % response spectra for initial matching, 
                         % otherwise the specifed seedValue is used.
 nTrials     = 20;       % number of iterations of the initial spectral 
@@ -216,4 +216,4 @@ rec = allowedIndex(IMs.recID); % selected motions, as indixed in the original da
 write_output(rec, IMs, outputDir, outputFile, getTimeSeries, Filename, dirLocation)
 
 %% Copy time series to the working directory, if possible
-download_time_series(outputDir, rec, Filename, dirLocation)
+% download_time_series(outputDir, rec, Filename, dirLocation)
